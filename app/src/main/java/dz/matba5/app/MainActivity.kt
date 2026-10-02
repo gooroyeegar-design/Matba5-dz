@@ -24,6 +24,8 @@ class MainActivity : Activity() {
                 super.onPageFinished(view, url)
                 injectAsset("v5_upgrades.js")
                 injectAsset("world_cuisine_v6.js")
+                injectAsset("world_cuisine_v7.js")
+                injectAsset("world_cuisine_v8.js")
             }
         }
         web.webChromeClient = WebChromeClient()
