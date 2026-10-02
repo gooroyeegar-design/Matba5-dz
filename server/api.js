@@ -60,7 +60,7 @@ async function handle(req,res){
   }
   if(u.pathname==='/substitutes'){
     const q=normalize(u.searchParams.get('ingredient')||'');
-    const map={butter:['olive oil','margarine'],milk:['unsweetened soy drink','oat drink'],cream:['plain yogurt','evaporated milk'],wheat flour:['oat flour','rice flour','corn flour'],parmesan:['aged hard cheese','nutritional yeast'],soy sauce:['tamari','salt + lemon'],lemon:['vinegar','citric acid water'],egg:['flax egg','aquafaba']};
+    const map={butter:['olive oil','margarine'],milk:['unsweetened soy drink','oat drink'],cream:['plain yogurt','evaporated milk'],'wheat flour':['oat flour','rice flour','corn flour'],parmesan:['aged hard cheese','nutritional yeast'],'soy sauce':['tamari','salt + lemon'],lemon:['vinegar','citric acid water'],egg:['flax egg','aquafaba']};
     return json(res,200,{ingredient:q,substitutes:map[q]||[]});
   }
   const match=u.pathname.match(/^\/recipes\/([^/]+)$/);
