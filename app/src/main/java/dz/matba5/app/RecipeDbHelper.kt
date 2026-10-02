@@ -24,16 +24,25 @@ class RecipeDbHelper(context: Context) : SQLiteOpenHelper(context, "matbak.db", 
             put("json", json)
             put("viewed_at", System.currentTimeMillis())
         }
-        if (favorite != null) put("favorite", if (favorite) 1 else 0)
+        if (favorite != null) {
+            put("favorite", if (favorite) 1 else 0)
+        }
         val updated = db.update("recipes", values, "id=?", arrayOf(id))
         if (updated == 0) {
-            if (favorite == null) values.put("favorite", 0)
+            if (favorite == null) {
+                values.put("favorite", Integer.valueOf(0))
+            }
             db.insertOrThrow("recipes", null, values)
         }
     }
 
     fun setFavorite(id: String, value: Boolean) {
-        writableDatabase.update("recipes", ContentValues().apply { put("favorite", if (value) 1 else 0) }, "id=?", arrayOf(id))
+        writableDatabase.update(
+            "recipes",
+            ContentValues().apply { put("favorite", if (value) 1 else 0) },
+            "id=?",
+            arrayOf(id)
+        )
     }
 
     fun favorites(): JSONArray = query("favorite=1", emptyArray(), "viewed_at DESC")
@@ -56,18 +65,31 @@ class RecipeDbHelper(context: Context) : SQLiteOpenHelper(context, "matbak.db", 
                 if (item.isNotEmpty()) db.insert("shopping", null, ContentValues().apply { put("item", item) })
             }
             db.setTransactionSuccessful()
-        } finally { db.endTransaction() }
+        } finally {
+            db.endTransaction()
+        }
     }
 
     fun shopping(): JSONArray {
         val out = JSONArray()
-        readableDatabase.query("shopping", arrayOf("id","item","checked"), null, null, null, null, "id DESC").use { c ->
-            while (c.moveToNext()) out.put(JSONObject().apply { put("id", c.getLong(0)); put("item", c.getString(1)); put("checked", c.getInt(2) == 1) })
+        readableDatabase.query("shopping", arrayOf("id", "item", "checked"), null, null, null, null, "id DESC").use { c ->
+            while (c.moveToNext()) {
+                out.put(JSONObject().apply {
+                    put("id", c.getLong(0))
+                    put("item", c.getString(1))
+                    put("checked", c.getInt(2) == 1)
+                })
+            }
         }
         return out
     }
 
     fun toggleShopping(id: Long, checked: Boolean) {
-        writableDatabase.update("shopping", ContentValues().apply { put("checked", if (checked) 1 else 0) }, "id=?", arrayOf(id.toString()))
+        writableDatabase.update(
+            "shopping",
+            ContentValues().apply { put("checked", if (checked) 1 else 0) },
+            "id=?",
+            arrayOf(id.toString())
+        )
     }
 }
