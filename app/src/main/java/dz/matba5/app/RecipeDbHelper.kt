@@ -25,12 +25,12 @@ class RecipeDbHelper(context: Context) : SQLiteOpenHelper(context, "matbak.db", 
             put("viewed_at", System.currentTimeMillis())
         }
         if (favorite != null) {
-            put("favorite", if (favorite) 1 else 0)
+            values.put("favorite", if (favorite) 1 else 0)
         }
         val updated = db.update("recipes", values, "id=?", arrayOf(id))
         if (updated == 0) {
             if (favorite == null) {
-                values.put("favorite", Integer.valueOf(0))
+                values.put("favorite", 0)
             }
             db.insertOrThrow("recipes", null, values)
         }
