@@ -1,2 +1,2 @@
 MATBAK DZ APK build verification trigger.
-Feature branch world-cuisine-dz final APK build after workflow stabilization.
+Feature branch world-cuisine-dz final offline-cache APK verification.
