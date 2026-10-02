@@ -27,8 +27,11 @@ class MainActivity : Activity() {
             allowFileAccess = true
             allowContentAccess = true
             mediaPlaybackRequiresUserGesture = true
+            loadsImagesAutomatically = true
+            blockNetworkImage = false
+            mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
         }
-        web.loadUrl("file:///android_asset/index_v2.html")
+        web.loadUrl("file:///android_asset/index_v3.html")
         setContentView(web)
     }
 
