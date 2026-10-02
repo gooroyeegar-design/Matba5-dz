@@ -1,0 +1,6 @@
+.mdz-no-emoji .option-icon,.mdz-no-emoji .food-emoji,.mdz-no-emoji .emoji,.mdz-no-emoji [data-emoji]{display:none!important}
+.mdz-no-emoji .option-card{min-height:150px}
+.mdz-no-emoji .option-card::before{content:'';display:block;width:10px;height:10px;border:2px solid currentColor;border-radius:50%;opacity:.45;margin:0 auto 14px}
+.mdz-no-emoji .recipe-image{background:#eef3ed;object-fit:cover}
+.mdz-no-emoji .recipe-image.fallback{display:flex;align-items:center;justify-content:center;font-weight:700;letter-spacing:.12em;color:#566158}
+.mdz-no-emoji .recipe-image.fallback::after{content:'MATBAK DZ'}
