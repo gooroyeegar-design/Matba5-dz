@@ -1,0 +1,5 @@
+{
+  "name":"matbak-dz-backend-tools",
+  "private":true,
+  "scripts":{"test:catalog":"node healthcheck_catalog.js && node catalogProvider.test.js"}
+}

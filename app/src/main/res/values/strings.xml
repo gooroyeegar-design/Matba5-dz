@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MATBAK DZ</string>
+    <string name="api_base_url" translatable="false"></string>
+    <string name="share_shopping_list">Share shopping list</string>
+    <string name="cooking_mode">Cooking mode</string>
+    <string name="keep_screen_on">Keep screen on while cooking</string>
+    <string name="whatsapp_package" translatable="false">com.whatsapp</string>
+</resources>

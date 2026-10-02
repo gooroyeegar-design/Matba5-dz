@@ -1,0 +1,8 @@
+{
+  "name": "matbak-dz-recipe-api",
+  "private": true,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {"start": "node api.js"},
+  "engines": {"node": ">=20"}
+}
