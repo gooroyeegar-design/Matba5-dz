@@ -8,6 +8,8 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.view.View
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class MainActivity : Activity() {
     private lateinit var web: WebView
@@ -17,7 +19,12 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         web = WebView(this)
         web.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-        web.webViewClient = WebViewClient()
+        web.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                injectPremiumUpgrade()
+            }
+        }
         web.webChromeClient = WebChromeClient()
         web.settings.apply {
             javaScriptEnabled = true
@@ -33,6 +40,17 @@ class MainActivity : Activity() {
         }
         web.loadUrl("file:///android_asset/index_v4.html")
         setContentView(web)
+    }
+
+    private fun injectPremiumUpgrade() {
+        try {
+            val text = assets.open("v5_upgrades.js").use { input ->
+                BufferedReader(InputStreamReader(input, Charsets.UTF_8)).readText()
+            }
+            web.evaluateJavascript(text, null)
+        } catch (_: Exception) {
+            // Optional visual layer; the core app remains usable if injection fails.
+        }
     }
 
     @Deprecated("Deprecated in Android API 33")
