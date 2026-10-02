@@ -31,7 +31,7 @@ class MainActivity : Activity() {
             blockNetworkImage = false
             mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
         }
-        web.loadUrl("file:///android_asset/index_v3.html")
+        web.loadUrl("file:///android_asset/index_v4.html")
         setContentView(web)
     }
 
