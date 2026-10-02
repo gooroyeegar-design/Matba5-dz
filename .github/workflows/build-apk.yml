@@ -2,7 +2,7 @@ name: Build MATBAK DZ APK
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/world-cuisine-dz]
   workflow_dispatch:
 
 permissions:
@@ -60,6 +60,10 @@ jobs:
           test -f app/build.gradle.kts
           test -f app/src/main/AndroidManifest.xml
           grep -q 'compileSdk = 35' app/build.gradle.kts
+          test -f app/src/main/assets/world_cuisine_v6.js
+          test -f app/src/main/assets/world_cuisine_v7.js
+          test -f app/src/main/java/dz/matba5/app/RecipeDbHelper.kt
+          test -f app/src/main/java/dz/matba5/app/MatbakBridge.kt
 
       - name: Generate Gradle wrapper
         run: gradle wrapper --gradle-version 8.10.2 --distribution-type bin
