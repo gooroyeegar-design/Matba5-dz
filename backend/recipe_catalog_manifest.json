@@ -1,0 +1,20 @@
+{
+  "product": "MATBAK DZ",
+  "catalog_target": 100000,
+  "architecture": "server_catalog_with_local_cache",
+  "languages": ["ar", "fr", "en"],
+  "categories": ["breakfast","brunch","lunch","dinner","snack","appetizer","main","side","soup","salad","sandwich","wrap","bowl","one-pot","street-food","fast-food","dessert","baking","bread","sauce","dip","juice","smoothie","hot-drink","cold-drink","mocktail","meal-prep","school-meal","budget-meal"],
+  "required_fields": ["id","title","titles","ingredients","steps","meal_types","dietary_labels","allergens","equipment","prep_minutes","cook_minutes","servings","image_url","image_source","image_license","recipe_source","recipe_license","verified"],
+  "image_rule": "one source-bound image per recipe; never rotate unrelated stock images",
+  "ingestion_rule": "only sources whose data and image rights permit the intended app distribution; preserve attribution and license per record",
+  "dedupe": ["canonical_title","ingredient_fingerprint","instruction_fingerprint","source_id"],
+  "ranking": ["allergy_safety","diet_match","meal_match","ingredient_match","equipment_match","budget","time","preference","quality"],
+  "growth": {
+    "initial_seed": "licensed_or_open_catalogs",
+    "on_demand_generation": true,
+    "cache_generated_recipes": true,
+    "never_claim_generated_as_traditional": true,
+    "review_before_public_catalog": true
+  },
+  "note": "Do not bundle 100000 full records or images into the APK. Populate the server catalog and fetch paginated results into the device cache. This keeps the APK small and supports 100000+ records."
+}
