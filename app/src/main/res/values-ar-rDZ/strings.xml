@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MATBAK DZ</string>
+    <string name="share_shopping_list">شارك لائحة الشرا</string>
+    <string name="cooking_mode">مود الطبخ</string>
+    <string name="keep_screen_on">خلي الشاشة شاعلة وانت تطيب</string>
+</resources>
