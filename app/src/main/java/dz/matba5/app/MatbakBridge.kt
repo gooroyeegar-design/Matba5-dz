@@ -10,7 +10,7 @@ class MatbakBridge(private val context: Context, private val activity: MainActiv
     private val db = RecipeDbHelper(context)
     private val prefs = context.getSharedPreferences("matbak_prefs", Context.MODE_PRIVATE)
 
-    @JavascriptInterface fun getLanguage(): String = prefs.getString("language", "ar") ?: "ar"
+    @JavascriptInterface fun getLanguage(): String = prefs.getString("language", "") ?: ""
     @JavascriptInterface fun setLanguage(language: String) { prefs.edit().putString("language", language).apply() }
     @JavascriptInterface fun saveRecipe(json: String, favorite: Boolean) { db.saveRecipe(json, favorite) }
     @JavascriptInterface fun setFavorite(id: String, favorite: Boolean) { db.setFavorite(id, favorite) }
