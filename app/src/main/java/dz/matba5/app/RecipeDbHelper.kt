@@ -18,18 +18,22 @@ class RecipeDbHelper(context: Context) : SQLiteOpenHelper(context, "matbak.db", 
     fun saveRecipe(json: String, favorite: Boolean? = null) {
         val obj = JSONObject(json)
         val id = obj.getString("id")
+        val db = writableDatabase
         val values = ContentValues().apply {
             put("id", id)
             put("json", json)
             put("viewed_at", System.currentTimeMillis())
-            if (favorite != null) put("favorite", if (favorite) 1 else 0)
         }
-        writableDatabase.insertWithOnConflict("recipes", null, values, SQLiteDatabase.CONFLICT_REPLACE)
+        if (favorite != null) put("favorite", if (favorite) 1 else 0)
+        val updated = db.update("recipes", values, "id=?", arrayOf(id))
+        if (updated == 0) {
+            if (favorite == null) values.put("favorite", 0)
+            db.insertOrThrow("recipes", null, values)
+        }
     }
 
     fun setFavorite(id: String, value: Boolean) {
-        val values = ContentValues().apply { put("favorite", if (value) 1 else 0) }
-        writableDatabase.update("recipes", values, "id=?", arrayOf(id))
+        writableDatabase.update("recipes", ContentValues().apply { put("favorite", if (value) 1 else 0) }, "id=?", arrayOf(id))
     }
 
     fun favorites(): JSONArray = query("favorite=1", emptyArray(), "viewed_at DESC")
@@ -48,8 +52,8 @@ class RecipeDbHelper(context: Context) : SQLiteOpenHelper(context, "matbak.db", 
         db.beginTransaction()
         try {
             for (i in 0 until items.length()) {
-                val value = ContentValues().apply { put("item", items.optString(i)) }
-                db.insert("shopping", null, value)
+                val item = items.optString(i).trim()
+                if (item.isNotEmpty()) db.insert("shopping", null, ContentValues().apply { put("item", item) })
             }
             db.setTransactionSuccessful()
         } finally { db.endTransaction() }
