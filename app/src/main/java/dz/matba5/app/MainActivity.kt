@@ -22,7 +22,8 @@ class MainActivity : Activity() {
         web.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                injectPremiumUpgrade()
+                injectAsset("v5_upgrades.js")
+                injectAsset("world_cuisine_v6.js")
             }
         }
         web.webChromeClient = WebChromeClient()
@@ -38,18 +39,19 @@ class MainActivity : Activity() {
             blockNetworkImage = false
             mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
         }
+        web.addJavascriptInterface(MatbakBridge(this, this), "Matbak")
         web.loadUrl("file:///android_asset/index_v4.html")
         setContentView(web)
     }
 
-    private fun injectPremiumUpgrade() {
+    private fun injectAsset(name: String) {
         try {
-            val text = assets.open("v5_upgrades.js").use { input ->
+            val text = assets.open(name).use { input ->
                 BufferedReader(InputStreamReader(input, Charsets.UTF_8)).readText()
             }
             web.evaluateJavascript(text, null)
         } catch (_: Exception) {
-            // Optional visual layer; the core app remains usable if injection fails.
+            // Optional enhancement layer; the base app remains usable if it cannot be injected.
         }
     }
 
